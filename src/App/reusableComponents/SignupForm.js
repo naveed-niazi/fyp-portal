@@ -16,12 +16,12 @@ import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert'
 //---
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { green, purple } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core/styles';
 //---
 import IIUI from '../../assets/images/iiui-logo.jpg'
 import { validation } from '../helpers/loginHelp'
-import { signup, authenticate } from '../apiCalls/authCalls'
+import { signup } from '../apiCalls/authCalls'
 
 
 const signupStyles = makeStyles((theme) => ({

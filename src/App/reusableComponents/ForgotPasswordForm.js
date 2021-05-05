@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link as RouterLink, Redirect } from 'react-router-dom'
 //---
 import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -92,13 +91,10 @@ function Alert(props) {
 const ForgotPasswordForm = () => {
     const classes = forgotPasswordStyles()
     const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const [errorIn, setErrorIn] = useState('')
     const [resetError, setResetError] = useState('')
     const [loading, setLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
-    const [redirect, setRedirect] = useState('')
-    const [code, setCode] = useState('');
     const [allowCode, setAllowCode] = useState(false)
 
 
@@ -123,12 +119,6 @@ const ForgotPasswordForm = () => {
 
             })
 
-    }
-    if (redirect) {
-        console.log(redirect)
-        const route = `/${redirect}`
-        console.log(route)
-        return < Redirect to={route} />
     }
 
     return (
