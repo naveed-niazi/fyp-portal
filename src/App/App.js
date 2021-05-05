@@ -6,6 +6,7 @@ import { createBrowserHistory } from "history";
 //---
 import Signup from './genericViews/Signup'
 import Signin from './genericViews/Signin'
+import ForgotPassword from './genericViews/ForgotPassword'
 //---
 const hist = createBrowserHistory();
 
@@ -16,6 +17,7 @@ function App() {
         {/* Login routes for students */}
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/signin" component={Signin} />
+        <Route path="/forgotpassword" component={ForgotPassword} />
         <Redirect from="/" to="/signin" />
       </Switch>
     </BrowserRouter>
