@@ -114,9 +114,11 @@ const ResetPasswordForm = ({ match }) => {
             setLoading(true)
             newPassword(resetId, Password)
                 .then(data => {
-                    if (data.err) {
+                    if (data.error) {
                         setLoading(false)
                         setResetError(true)
+                        setErrorMessage(data.error)
+                        setRedirect(true)
                     } else {
                         setLoading(false)
                         setRedirect(true)
@@ -172,9 +174,8 @@ const ResetPasswordForm = ({ match }) => {
                         {loading ? <Box className={classes.root} display="flex" justifyContent="center">
                             <CircularProgress />
                         </Box> : ""}
-                        {resetError ? <div className={classes.root}>
-                            <Alert severity="error">Unable to reset password</Alert>
-                        </div> : ""}
+
+
                         <GreenButton
                             type="submit"
                             fullWidth
@@ -186,11 +187,16 @@ const ResetPasswordForm = ({ match }) => {
                     </GreenButton>
                     </form>
                     :
-                    <Box mt={5}>
-                        <Alert severity="success">
-                            Password Reset, Please{` `} <RouterLink to="/signin">Sign In!</RouterLink>
-                        </Alert>
-                    </Box>
+                    resetError ?
+                        <div className={classes.root} >
+                            <Alert severity="error">{errorMessage}</Alert>
+                        </div>
+                        :
+                        <Box mt={5}>
+                            <Alert severity="success">
+                                Password Reset, Please{` `} <RouterLink to="/signin">Sign In!</RouterLink>
+                            </Alert>
+                        </Box>
 
                 }
 

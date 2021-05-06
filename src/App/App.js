@@ -8,6 +8,9 @@ import Signup from './genericViews/Signup'
 import Signin from './genericViews/Signin'
 import ForgotPassword from './genericViews/ForgotPassword'
 import ResetPassword from './genericViews/ResetPassword'
+import Welcome from './genericViews/Welcome'
+//---
+import StudentView from './roleViews/StudentView'
 
 //---
 //const hist = createBrowserHistory();
@@ -16,11 +19,18 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        {/* Login routes for students */}
+
+        {/* once in a blue moon cases */}
+        <Route path="/confirm/:confirmationCode" component={Welcome} />
+        <Route path="/reset-password/:resetId" component={ResetPassword} />
+        <Route exact path="/forgotpassword" component={ForgotPassword} />
+
+        {/* exact routes for user to login */}
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/signin" component={Signin} />
-        <Route path="/forgotpassword" component={ForgotPassword} />
-        <Route exact path="/reset-password/:resetId" component={ResetPassword} />
+        {/* showing differnt views based on roles */}
+        <Route path="/student" component={StudentView} />
+
         <Redirect from="/" to="/signin" />
       </Switch>
     </BrowserRouter>

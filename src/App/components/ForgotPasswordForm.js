@@ -112,11 +112,11 @@ const ForgotPasswordForm = () => {
                     setLoading(false)
                     setResetError(true)
                     setErrorMessage(data.error)
+                    setAllowCode(true)
                 } else {
                     setLoading(false)
                     setAllowCode(true)
                 }
-
             })
 
     }
@@ -153,9 +153,7 @@ const ForgotPasswordForm = () => {
                             {loading ? <Box className={classes.root} display="flex" justifyContent="center">
                                 <CircularProgress />
                             </Box> : ""}
-                            {resetError ? <div className={classes.root}>
-                                <Alert severity="error">{errorMessage}</Alert>
-                            </div> : ""}
+
                             <GreenButton
                                 type="submit"
                                 fullWidth
@@ -167,9 +165,14 @@ const ForgotPasswordForm = () => {
                     </GreenButton>
                         </form>
                         :
-                        <Box mt={5}>
-                            <Alert severity="success"> Email sent, Please Check your email!</Alert>
-                        </Box>
+                        resetError ?
+                            <div className={classes.root} >
+                                <Alert severity="error">{errorMessage}</Alert>
+                            </div>
+                            :
+                            <Box mt={5}>
+                                <Alert severity="success"> Email sent, Please Check your email!</Alert>
+                            </Box>
                 }
             </div>
         </Container >

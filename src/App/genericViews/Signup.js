@@ -2,9 +2,9 @@ import React from 'react'
 //---
 import Box from '@material-ui/core/Box'
 //---
-import Copyright from '../reusableComponents/Copyright'
-import Topbar from '../reusableComponents/Topbar'
-import SignupForm from '../reusableComponents/SignupForm';
+import Copyright from '../components/Copyright'
+import Topbar from '../components/Topbar'
+import SignupForm from '../components/SignupForm';
 
 const Signup = () => {
     return (

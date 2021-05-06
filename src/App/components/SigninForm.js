@@ -127,7 +127,7 @@ const SigninForm = () => {
     }
     if (redirect) {
         console.log(redirect)
-        const route = `/${redirect}`
+        const route = `/student`
         console.log(route)
         return < Redirect to={route} />
     }
