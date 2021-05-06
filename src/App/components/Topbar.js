@@ -103,17 +103,7 @@ export default function Header() {
 
         return (
             <Toolbar>
-                <IconButton
-                    {...{
-                        edge: "start",
-                        color: "inherit",
-                        "aria-label": "menu",
-                        "aria-haspopup": "true",
-                        onClick: handleDrawerOpen,
-                    }}
-                >
-                    <MenuIcon />
-                </IconButton>
+
 
                 <Drawer
                     {...{

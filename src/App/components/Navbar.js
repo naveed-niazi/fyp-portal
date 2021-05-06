@@ -11,6 +11,7 @@ import Hidden from "@material-ui/core/Hidden";
 import Menu from "@material-ui/icons/Menu";
 //---
 import Button from "./CustomButton";
+import NavbarLinks from './NavbarLinks'
 
 import {
     container,
@@ -122,6 +123,9 @@ export default function Header(props) {
                         {makeBrand()}
                     </Button>
                 </div>
+                <Hidden smDown implementation="css">
+                    <NavbarLinks />
+                </Hidden>
                 <Hidden mdUp implementation="css">
                     <IconButton
                         color="inherit"
