@@ -9,14 +9,13 @@ import Language from "@material-ui/icons/Language";
 
 import Documentation from "../pages/Documentation"
 import Something from "../pages/Something"
+import Nothing from "../pages/Nothing"
 
 
 const dashboardRoutes = [
-
     {
         path: "/documentation",
         name: "Documentation",
-        rtlName: "ملف تعريفي للمستخدم",
         icon: AssignmentIcon,
         component: Documentation,
         layout: "/student"
@@ -24,10 +23,16 @@ const dashboardRoutes = [
     {
         path: "/something",
         name: "Something",
-        rtlName: "لوحة القيادة",
         icon: BallotIcon,
         component: Something,
         layout: "/student"
+    },
+    {
+        path: "/nothing",
+        name: "Nothing",
+        icon: BallotIcon,
+        component: Nothing,
+        layout: "/admin"
     }
 ];
 

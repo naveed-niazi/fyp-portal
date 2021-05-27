@@ -11,6 +11,10 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import Icon from "@material-ui/core/Icon";
 //---
+import NavbarLinks from "./NavbarLinks"
+import { roleNow } from "../helpers/authenticationHelp"
+
+//---
 import {
     drawerWidth,
     transition,
@@ -63,16 +67,6 @@ const sidebarStyle = theme => ({
             ...transition
         }
     },
-    drawerPaperRTL: {
-        [theme.breakpoints.up("md")]: {
-            left: "auto !important",
-            right: "0 !important"
-        },
-        [theme.breakpoints.down("sm")]: {
-            left: "0  !important",
-            right: "auto !important"
-        }
-    },
     logo: {
         position: "relative",
         padding: "15px 15px",
@@ -102,9 +96,6 @@ const sidebarStyle = theme => ({
         "&,&:hover": {
             color: whiteColor
         }
-    },
-    logoLinkRTL: {
-        textAlign: "right"
     },
     logoImage: {
         width: "30px",
@@ -180,20 +171,12 @@ const sidebarStyle = theme => ({
         verticalAlign: "middle",
         color: "rgba(" + hexToRgb(whiteColor) + ", 0.8)"
     },
-    itemIconRTL: {
-        marginRight: "3px",
-        marginLeft: "15px",
-        float: "right"
-    },
     itemText: {
         ...defaultFont,
         margin: "0",
         lineHeight: "30px",
         fontSize: "14px",
         color: whiteColor
-    },
-    itemTextRTL: {
-        textAlign: "right"
     },
     whiteFont: {
         color: whiteColor
@@ -325,58 +308,52 @@ export default function Sidebar(props) {
     var links = (
         <List className={classes.list}>
             {routes.map((prop, key) => {
-                var activePro = " ";
-                var listItemClasses;
-                listItemClasses = classNames({
-                    [" " + classes[color]]: activeRoute(prop.layout + prop.path)
-                });
+                if (prop.layout == `/${roleNow().toLowerCase()}`) {
+                    var activePro = " ";
+                    var listItemClasses;
+                    listItemClasses = classNames({
+                        [" " + classes[color]]: activeRoute(prop.layout + prop.path)
+                    });
 
-                const whiteFontClasses = classNames({
-                    [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
-                });
-                return (
-                    <NavLink
-                        to={prop.layout + prop.path}
-                        className={activePro + classes.item}
-                        activeClassName="active"
-                        key={key}
-                    >
-                        <ListItem button className={classes.itemLink + listItemClasses}>
-                            {typeof prop.icon === "string" ? (
-                                <Icon
-                                    className={classNames(classes.itemIcon, whiteFontClasses, {
-                                        [classes.itemIconRTL]: props.rtlActive
-                                    })}
-                                >
-                                    {prop.icon}
-                                </Icon>
-                            ) : (
-                                <prop.icon
-                                    className={classNames(classes.itemIcon, whiteFontClasses, {
-                                        [classes.itemIconRTL]: props.rtlActive
-                                    })}
+                    const whiteFontClasses = classNames({
+                        [" " + classes.whiteFont]: activeRoute(prop.layout + prop.path)
+                    });
+                    return (
+                        <NavLink
+                            to={prop.layout + prop.path}
+                            className={activePro + classes.item}
+                            activeClassName="active"
+                            key={key}
+                        >
+                            <ListItem button className={classes.itemLink + listItemClasses}>
+                                {typeof prop.icon === "string" ? (
+                                    <Icon
+                                        className={classNames(classes.itemIcon, whiteFontClasses)}
+                                    >
+                                        {prop.icon}
+                                    </Icon>
+                                ) : (
+                                    <prop.icon
+                                        className={classNames(classes.itemIcon, whiteFontClasses)}
+                                    />
+                                )}
+                                <ListItemText
+                                    primary={prop.name}
+                                    className={classNames(classes.itemText, whiteFontClasses)}
+                                    disableTypography={true}
                                 />
-                            )}
-                            <ListItemText
-                                primary={props.rtlActive ? prop.rtlName : prop.name}
-                                className={classNames(classes.itemText, whiteFontClasses, {
-                                    [classes.itemTextRTL]: props.rtlActive
-                                })}
-                                disableTypography={true}
-                            />
-                        </ListItem>
-                    </NavLink>
-                );
+                            </ListItem>
+                        </NavLink>
+                    );
+                }
             })}
         </List>
     );
     var brand = (
         <div className={classes.logo}>
             <a
-                href="https://www.creative-tim.com?ref=mdr-sidebar"
-                className={classNames(classes.logoLink, {
-                    [classes.logoLinkRTL]: props.rtlActive
-                })}
+                href="https://mainpage.com"
+                className={classNames(classes.logoLink)}
                 target="_blank"
             >
                 <div className={classes.logoImage}>
@@ -391,12 +368,10 @@ export default function Sidebar(props) {
             <Hidden mdUp implementation="css">
                 <Drawer
                     variant="temporary"
-                    anchor={props.rtlActive ? "left" : "right"}
+                    anchor={"right"}
                     open={props.open}
                     classes={{
-                        paper: classNames(classes.drawerPaper, {
-                            [classes.drawerPaperRTL]: props.rtlActive
-                        })
+                        paper: classNames(classes.drawerPaper)
                     }}
                     onClose={props.handleDrawerToggle}
                     ModalProps={{
@@ -404,6 +379,10 @@ export default function Sidebar(props) {
                     }}
                 >
                     {brand}
+                    <div className={classes.sidebarWrapper}>
+                        <NavbarLinks />
+                        {links}
+                    </div>
                     {image !== undefined ? (
                         <div
                             className={classes.background}
@@ -414,13 +393,11 @@ export default function Sidebar(props) {
             </Hidden>
             <Hidden smDown implementation="css">
                 <Drawer
-                    anchor={props.rtlActive ? "right" : "left"}
+                    anchor={"left"}
                     variant="permanent"
                     open
                     classes={{
-                        paper: classNames(classes.drawerPaper, {
-                            [classes.drawerPaperRTL]: props.rtlActive
-                        })
+                        paper: classNames(classes.drawerPaper)
                     }}
                 >
                     {brand}
@@ -438,7 +415,6 @@ export default function Sidebar(props) {
 }
 
 Sidebar.propTypes = {
-    rtlActive: PropTypes.bool,
     handleDrawerToggle: PropTypes.func,
     bgColor: PropTypes.oneOf(["purple", "blue", "red", "yellow", "pink"]),
     logo: PropTypes.string,

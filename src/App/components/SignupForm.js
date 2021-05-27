@@ -22,6 +22,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IIUI from '../../assets/images/iiui-logo.jpg'
 import { validation } from '../helpers/loginHelp'
 import { signup } from '../apiCalls/authCalls'
+import { useEffect } from 'react';
 
 
 const signupStyles = makeStyles((theme) => ({
@@ -115,8 +116,6 @@ const SignupForm = () => {
                 })
         }
     }
-
-
 
     return (
         <Container component="main" maxWidth="xs">

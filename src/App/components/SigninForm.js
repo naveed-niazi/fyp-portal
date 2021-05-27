@@ -17,6 +17,7 @@ import { green } from '@material-ui/core/colors';
 import IIUI from '../../assets/images/iiui-logo.jpg'
 import { signin } from '../apiCalls/authCalls'
 import { authenticate, validationSignin } from "../helpers/loginHelp"
+import { roleNow } from "../helpers/authenticationHelp"
 
 
 const GreenTextField = withStyles({
@@ -112,7 +113,6 @@ const SigninForm = () => {
                     if (data.error) {
                         setLoading(false)
                         setSigninError(data.error)
-                        setLoading(false)
                     }
                     else {
                         authenticate(data, () => {
@@ -126,8 +126,9 @@ const SigninForm = () => {
 
     }
     if (redirect) {
-        console.log(redirect)
-        const route = `/student`
+
+        console.log(roleNow())
+        const route = `/${roleNow().toLowerCase()}`
         console.log(route)
         return < Redirect to={route} />
     }

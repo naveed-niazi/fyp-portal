@@ -9,9 +9,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
-import routes from "../variables/studentRoutes"
+import routes from "../variables/mainRoutes"
 import bgImage from "../../assets/images/sidebar-3.jpg";
 import logo from '../../assets/images/iiui-transparent.png';
+import { roleNow } from '../helpers/authenticationHelp'
 
 import {
     drawerWidth,
@@ -54,7 +55,7 @@ let perfectScrollbar;
 const switchRoutes = (
     <Switch>
         {routes.map((prop, key) => {
-            if (prop.layout === "/student") {
+            if (prop.layout == `/${roleNow().toLowerCase()}`) {
                 return (
                     <Route
                         path={prop.layout + prop.path}
@@ -65,13 +66,12 @@ const switchRoutes = (
             }
             return null;
         })}
-        <Redirect from="/student" to="/student/documentation" />
     </Switch>
 );
 
 const useStyles = makeStyles(appStyle);
 
-export default function StudentView({ ...rest }) {
+export default function MainView({ ...rest }) {
     // styles
     const classes = useStyles();
     // ref to help us initialize PerfectScrollbar on windows devices
