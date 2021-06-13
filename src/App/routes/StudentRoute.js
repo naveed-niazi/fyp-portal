@@ -7,14 +7,11 @@ const StudentRoute = ({ component: Component, ...rest }) => (
     <Route
         {...rest}
         render={props =>
-            isLoggedIn() && roleNow() === "Admin" ?
-                <Redirect to={{ pathname: "/admin/nothing", state: { from: props.location } }} />
+            isLoggedIn() && roleNow() === "Student"
+                ?
+                (<Component{...props} />)
                 :
-                isLoggedIn() && roleNow() === "Student"
-                    ?
-                    (<Component{...props} />)
-                    :
-                    (<Redirect to={{ pathname: "/signin", state: { from: props.location } }} />)
+                (<Redirect to={{ pathname: "/signin", state: { from: props.location } }} />)
         } />
 )
 

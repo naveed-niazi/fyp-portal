@@ -1,5 +1,5 @@
 export const signup = student => {
-    return fetch(`https://grc-portal.herokuapp.com/signup`, {
+    return fetch(`http://localhost:8080/signup`, {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -11,7 +11,7 @@ export const signup = student => {
         .catch(err => { console.log(err) })
 }
 export const signin = user => {
-    return fetch(`https://grc-portal.herokuapp.com/signin`, {
+    return fetch(`http://localhost:8080/signin`, {
         method: "POST",
         headers: {
             Accept: "application/json",
@@ -61,3 +61,4 @@ export const newPassword = (resetId, Password) => {
         .then(response => { return response.json() })
         .catch(err => { console.log(err) })
 }
+

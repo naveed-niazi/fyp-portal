@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 
 //---
@@ -85,9 +86,15 @@ const signinStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(3),
     },
     submit: {
+        color: "white",
         margin: theme.spacing(3, 0, 2),
     },
 }));
+const theme = createMuiTheme({
+    palette: {
+        primary: green,
+    },
+});
 
 const SigninForm = () => {
     const classes = signinStyles()
@@ -141,69 +148,71 @@ const SigninForm = () => {
                 <Typography component="h1" variant="h5">
                     Sign in
         </Typography>
-                <form className={classes.form} onSubmit={handleSubmit} noValidate>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <GreenTextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                value={email}
-                                onChange={e => { setEmail(e.target.value); setErrorIn('') }}
-                                error={errorIn === "email"}
-                                helperText={errorIn === "email" ? errorMessage : ''}
-                                autoComplete="email"
-                                autoFocus
-                            />
+                <ThemeProvider theme={theme}>
+                    <form className={classes.form} onSubmit={handleSubmit} noValidate>
+                        <Grid container spacing={2}>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="Email Address"
+                                    name="email"
+                                    value={email}
+                                    onChange={e => { setEmail(e.target.value); setErrorIn('') }}
+                                    error={errorIn === "email"}
+                                    helperText={errorIn === "email" ? errorMessage : ''}
+                                    autoComplete="email"
+                                    autoFocus
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Password"
+                                    type="password"
+                                    id="password"
+                                    value={password}
+                                    onChange={e => { setPassword(e.target.value); setErrorIn('') }}
+                                    error={errorIn === "password"}
+                                    helperText={errorIn === "password" ? errorMessage : ''}
+                                    autoComplete="current-password"
+                                />
+                            </Grid>
                         </Grid>
-                        <Grid item xs={12}>
-                            <GreenTextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                value={password}
-                                onChange={e => { setPassword(e.target.value); setErrorIn('') }}
-                                error={errorIn === "password"}
-                                helperText={errorIn === "password" ? errorMessage : ''}
-                                autoComplete="current-password"
-                            />
-                        </Grid>
-                    </Grid>
-                    {loading ? <Box className={classes.root} display="flex" justifyContent="center">
-                        <CircularProgress />
-                    </Box> : ""}
-                    {signinError ? <div className={classes.root}>
-                        <Alert severity="error">Email or Password is incorrect</Alert>
-                    </div> : ""}
-                    <GreenButton
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
-                    </GreenButton>
-                    <Grid container>
-                        <Grid item xs>
-                            <RouterLink to="/forgotpassword" variant="body2">
-                                Forgot Password
+                        {loading ? <Box className={classes.root} display="flex" justifyContent="center">
+                            <CircularProgress />
+                        </Box> : ""}
+                        {signinError ? <div className={classes.root}>
+                            <Alert severity="error">Email or Password is incorrect</Alert>
+                        </div> : ""}
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Sign In
+                    </Button>
+                        <Grid container>
+                            <Grid item xs>
+                                <RouterLink to="/forgotpassword" variant="body2">
+                                    Forgot Password
                             </RouterLink>
-                        </Grid>
-                        <Grid item >
-                            <RouterLink to="/signup" variant="body2">
-                                Don't have an account? Signup
+                            </Grid>
+                            <Grid item >
+                                <RouterLink to="/signup" variant="body2">
+                                    Don't have an account? Signup
                             </RouterLink>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </form>
+                    </form>
+                </ThemeProvider>
             </div>
         </Container >
     );

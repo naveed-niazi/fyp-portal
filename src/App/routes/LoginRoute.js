@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { isLoggedIn, roleNow } from "../helpers/authenticationHelp"
 
-const AdminRoute = ({ component: Component, ...rest }) => (
+const LoginRoute = ({ component: Component, ...rest }) => (
     //props means all the components passed down to this private route component
     <Route
         {...rest}
         render={props =>
-            isLoggedIn() && roleNow() == "Admin" ?
-                (<Component{...props} />)
+            isLoggedIn() && roleNow() ?
+                (<Redirect to={{ pathname: `/${roleNow().toLowerCase()}`, state: { from: props.location } }} />)
                 :
-                (<Redirect to={{ pathname: "/signin", state: { from: props.location } }} />)
+                (<Component{...props} />)
         } />
 )
 
-export default AdminRoute;
+export default LoginRoute;

@@ -9,9 +9,11 @@ import IconButton from "@material-ui/core/IconButton";
 import Hidden from "@material-ui/core/Hidden";
 //---
 import Menu from "@material-ui/icons/Menu";
+import Icon from "@material-ui/core/Icon"
 //---
 import Button from "./CustomButton";
-import NavbarLinks from './NavbarLinks'
+import NavbarLinks from './NavbarLinks';
+import PageHeader from "./PageHeader"
 
 import {
     container,
@@ -23,10 +25,12 @@ import {
     warningColor,
     dangerColor,
     whiteColor,
-    grayColor
+    grayColor,
+    hexToRgb
 } from "../../assets/jss/portalStyles";
+import { Card, ThemeProvider } from "@material-ui/core";
 
-const headerStyle = {
+const headerStyle = theme => ({
     appBar: {
         backgroundColor: "#4CAF50",
         boxShadow: "none",
@@ -38,8 +42,8 @@ const headerStyle = {
         zIndex: "1029",
         color: grayColor[7],
         border: "0",
-        borderRadius: "3px",
-        padding: "10px 0",
+        borderRadius: "0px",
+        padding: "0 0",
         transition: "all 150ms ease 0s",
         minHeight: "50px",
         display: "block"
@@ -91,8 +95,8 @@ const headerStyle = {
         backgroundColor: dangerColor[0],
         color: whiteColor,
         ...defaultBoxShadow
-    }
-};
+    },
+});
 
 
 const useStyles = makeStyles(headerStyle);
@@ -101,14 +105,16 @@ const useStyles = makeStyles(headerStyle);
 export default function Header(props) {
     const classes = useStyles();
     function makeBrand() {
-        var name;
+        var name, icon;
         props.routes.map(prop => {
             if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
                 name = prop.name;
+                icon = prop.theIcon;
             }
             return null;
         });
-        return name;
+        console.log(icon)
+        return { name, icon };
     }
     const { color } = props;
     const appBarClasses = classNames({
@@ -118,11 +124,10 @@ export default function Header(props) {
         <AppBar className={classes.appBar + appBarClasses}>
             <Toolbar className={classes.container}>
                 <div className={classes.flex}>
-                    {/* Here we create navbar brand, based on route name */}
-                    <Button color="transparent" href="#" className={classes.title}>
-                        {makeBrand()}
-                    </Button>
+                    {/*Specific Component Data in TopBar*/}
+
                 </div>
+
                 <Hidden smDown implementation="css">
                     <NavbarLinks />
                 </Hidden>

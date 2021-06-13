@@ -19,3 +19,12 @@ export const roleNow = () => {
     else
         return false;
 }
+export const changeRole = (role) => {
+    console.log("changing the role: " + role)
+    if (role === "Professor" || role === "Program-Office" || role === "Admin") {
+        localStorage.setItem("currentRole", role)
+        return true;
+    }
+    return false;
+
+}

@@ -22,7 +22,7 @@ import Button from "./CustomButton";
 import styles from "../../assets/jss/headerlinkStyles";
 //---
 import { signout } from '../apiCalls/authCalls'
-import { isLoggedIn, roleNow } from '../helpers/authenticationHelp'
+import { isLoggedIn, roleNow, changeRole } from '../helpers/authenticationHelp'
 
 
 const useStyles = makeStyles(styles);
@@ -52,6 +52,9 @@ const StudentNavbarLinks = () => {
         history.push("/signin")
     };
     const handleRoleChange = role => {
+        changeRole(role);
+        history.push(`/${role.toLowerCase()}`);
+        window.location.reload(false);
 
     }
     const handleCloseNotification = () => {

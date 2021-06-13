@@ -14,6 +14,9 @@ import MainView from '../roleViews/MainView'
 //---
 import AdminRoute from "./AdminRoute"
 import StudentRoute from "./StudentRoute"
+import PORoute from "./PORoute"
+import ProfessorRoute from "./ProfessorRoute"
+import LoginRoute from "./LoginRoute"
 
 function MainRouter() {
     return (
@@ -25,11 +28,14 @@ function MainRouter() {
             <Route exact path="/forgotpassword" component={ForgotPassword} />
 
             {/* exact routes for user to login */}
-            <Route exact path="/signup" component={Signup} />
-            <Route exact path="/signin" component={Signin} />
+            <LoginRoute exact path="/signup" component={Signup} />
+            <LoginRoute exact path="/signin" component={Signin} />
             {/* showing differnt views based on roles */}
             <StudentRoute path="/student" component={MainView} />
             <AdminRoute path="/admin" component={MainView} />
+            <PORoute path="/program-office" component={MainView} />
+            <ProfessorRoute path="/professor" component={MainView} />
+
 
 
             <Redirect from="/" to="/signin" />

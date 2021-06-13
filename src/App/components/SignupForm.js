@@ -105,13 +105,19 @@ const SignupForm = () => {
             setSignupError('')
             signup(student)
                 .then(response => {
-                    if (response.error) {
-                        setLoading(false)
-                        setSignupError(response.error)
+                    if (response) {
+                        if (response.error) {
+                            setLoading(false)
+                            setSignupError(response.error)
+                        }
+                        else {
+                            setLoading(false)
+                            setSignupSuccess(response.message)
+                        }
                     }
                     else {
                         setLoading(false)
-                        setSignupSuccess(response.message)
+                        setSignupError("Unable to Connect")
                     }
                 })
         }

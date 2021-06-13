@@ -4,13 +4,17 @@ import AssignmentIcon from '@material-ui/icons/Assignment';
 import BallotIcon from '@material-ui/icons/Ballot';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Language from "@material-ui/icons/Language";
+import AddToQueueIcon from '@material-ui/icons/AddToQueue';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 // core components/views for Student layout
 
 import Documentation from "../pages/Documentation"
 import Something from "../pages/Something"
-import Nothing from "../pages/Nothing"
-
+import Users from "../pages/Users"
+import UserQue from "../pages/UserQue";
+import Supervisee from "../pages/Supervisee"
 
 const dashboardRoutes = [
     {
@@ -28,11 +32,25 @@ const dashboardRoutes = [
         layout: "/student"
     },
     {
-        path: "/nothing",
-        name: "Nothing",
-        icon: BallotIcon,
-        component: Nothing,
+        path: "/users",
+        name: "Users",
+        icon: PersonAddIcon,
+        component: Users,
         layout: "/admin"
+    },
+    {
+        path: "/user-que",
+        name: "Pending Users",
+        icon: AddToQueueIcon,
+        component: UserQue,
+        layout: "/program-office"
+    },
+    {
+        path: "/supervisee",
+        name: "Supervisee",
+        icon: SupervisorAccountIcon,
+        component: Supervisee,
+        layout: "/professor"
     }
 ];
 
