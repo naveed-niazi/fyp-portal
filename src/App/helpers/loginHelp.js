@@ -39,8 +39,11 @@ export const validationSignin = (email, password) => {
 }
 
 export const authenticate = (jwt, next) => {
+    var oneDay = 24 * 60 * 60 * 1000;
+    const expireTime = Date.now() + oneDay;
     if (typeof window !== "undefined") {
         localStorage.setItem("jwt", JSON.stringify(jwt))
+        localStorage.setItem("expire_time", expireTime)
     }
     if (jwt.user.roles.includes("Student")) {
         localStorage.setItem("currentRole", "Student")

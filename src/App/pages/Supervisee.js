@@ -1,11 +1,27 @@
 import React from 'react';
+import PageLayout from "../components/PageLayout"
+import SuperviseeTabs from '../components/SuperviseeTabs';
+import { makeStyles } from '@material-ui/core/styles';
 
-const Students = () => {
+const useStyles = makeStyles({
+    root: {
+        width: '100%',
+        marginTop: "2rem"
+    },
+    container: {
+        maxHeight: 440,
+    },
+});
+
+const Supervisee = ({ Data }) => {
+
+    const classes = useStyles();
+
     return (
-        <div>
-            <h1>I am supervisee</h1>
-        </div>
+        <PageLayout Title={Data.name} Icon={Data.icon}>
+            <SuperviseeTabs />
+        </PageLayout>
     );
 };
 
-export default Students;
+export default Supervisee;

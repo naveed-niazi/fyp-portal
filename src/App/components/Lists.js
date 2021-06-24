@@ -21,9 +21,9 @@ import { isLoggedIn } from "../helpers/authenticationHelp"
 import Notification from "./Notification";
 
 const headCells = [
-    { id: 'fullName', label: 'Employee Name', minWidth: 170 },
-    { id: 'email', label: 'Email Address (Personal)', minWidth: 170 },
-    { id: 'actions', label: 'Actions', disableSorting: true, minWidth: 100 }
+    { id: 'fullName', label: 'Employee Name', minWidth: 200 },
+    { id: 'email', label: 'Email Address (Personal)', minWidth: 200 },
+    { id: 'actions', label: 'Actions', disableSorting: true, minWidth: 200 }
 ]
 
 const useStyles = makeStyles({
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 });
 const Lists = (props) => {
     const classes = useStyles();
-    const { recordType, filterFn, userAdd } = props;
+    const { recordType, setRecordType, filterFn, filterDe, filterBh, filterPd, userAdd } = props;
     const [records, setRecords] = useState([]);
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
@@ -48,13 +48,15 @@ const Lists = (props) => {
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [updating, setUpdating] = useState("");
+
 
     const {
         TblContainer,
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting
-    } = useTable(records, headCells, filterFn);
+    } = useTable(records, headCells, filterFn, filterDe, filterBh, filterPd);
 
     const openInPopup = item => {
         setRecordForEdit(item)
@@ -62,25 +64,28 @@ const Lists = (props) => {
     }
 
     const onDelete = id => {
+        setUpdating("yes")
         setConfirmDialog({
-            ...confirmDialog,
-            isOpen: false
+            title: 'User is being deleted please wait',
+            subTitle: "Please wait!",
+            isOpen: true
         })
         const token = isLoggedIn().token;
         deleteUser(id, token)
             .then(data => {
+                setUpdating("done")
                 if (data) {
                     if (data.error || data.err) {
-                        setNotify({
-                            isOpen: true,
-                            message: data.error,
-                            type: 'error'
+                        setConfirmDialog({
+                            title: data.error,
+                            subTitle: "Update Error",
+                            isOpen: true
                         })
                     } else {
-                        setNotify({
-                            isOpen: true,
-                            message: data.message,
-                            type: 'error'
+                        setConfirmDialog({
+                            title: "User Is Deleted",
+                            subTitle: "Data Updated!",
+                            isOpen: true
                         })
                         setUserDeleted(userDeleted + 1)
                     }
@@ -93,6 +98,7 @@ const Lists = (props) => {
         setLoading(true)
         console.log("i am trying")
         const token = isLoggedIn().token;
+        setRecordType(recordType)
         getUsers(recordType, token)
             .then(data => {
                 if (data) {
@@ -177,6 +183,8 @@ const Lists = (props) => {
             <ConfirmDialog
                 confirmDialog={confirmDialog}
                 setConfirmDialog={setConfirmDialog}
+                loading={updating}
+                setLoading={setLoading}
             />
         </Paper >
 

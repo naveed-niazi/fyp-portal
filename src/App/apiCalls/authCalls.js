@@ -1,3 +1,4 @@
+
 export const signup = student => {
     return fetch(`http://localhost:8080/signup`, {
         method: "POST",
@@ -23,21 +24,16 @@ export const signin = user => {
         .catch(err => { console.log(err) })
 }
 export const signout = () => {
-    if (typeof window !== undefined) {
-        localStorage.removeItem('jwt');
-        localStorage.removeItem('currentRole');
-    }
-    return fetch(`https://grc-portal.herokuapp.com/signout`, {
+    return fetch(`http://localhost:8080/signout`, {
         method: 'GET'
     })
         .then(response => {
-            console.log('signout', response)
             return response.json
         })
         .catch(err => console.log(err))
 }
 export const forgotPassword = email => {
-    return fetch(`https://grc-portal.herokuapp.com/forgot-password`, {
+    return fetch(`http://localhost:8080/forgot-password`, {
         method: "PUT",
         headers: {
             Accept: "application/json",
@@ -50,7 +46,7 @@ export const forgotPassword = email => {
 }
 
 export const newPassword = (resetId, Password) => {
-    return fetch(`https://grc-portal.herokuapp.com/reset-password/${resetId}`, {
+    return fetch(`http://localhost:8080/reset-password/${resetId}`, {
         method: "PUT",
         headers: {
             Accept: "application/json",

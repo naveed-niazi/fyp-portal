@@ -126,18 +126,19 @@ const SigninForm = () => {
                             setRedirect(data.user.roles[0])
                         })
                     }
-                } else
+                } else{
+                    setSigninError("Unable to Connect to Server")
                     setLoading(false)
+                }
 
             })
 
     }
     if (redirect) {
-
-        console.log(roleNow())
         const route = `/${roleNow().toLowerCase()}`
-        console.log(route)
+        window.location.reload(false);
         return < Redirect to={route} />
+
     }
 
     return (
@@ -147,7 +148,7 @@ const SigninForm = () => {
                 <img className={classes.avatar} src={IIUI} alt="IIUI" />
                 <Typography component="h1" variant="h5">
                     Sign in
-        </Typography>
+                </Typography>
                 <ThemeProvider theme={theme}>
                     <form className={classes.form} onSubmit={handleSubmit} noValidate>
                         <Grid container spacing={2}>
@@ -188,7 +189,7 @@ const SigninForm = () => {
                             <CircularProgress />
                         </Box> : ""}
                         {signinError ? <div className={classes.root}>
-                            <Alert severity="error">Email or Password is incorrect</Alert>
+                            <Alert severity="error">{signinError}</Alert>
                         </div> : ""}
                         <Button
                             type="submit"
@@ -198,17 +199,17 @@ const SigninForm = () => {
                             className={classes.submit}
                         >
                             Sign In
-                    </Button>
+                        </Button>
                         <Grid container>
                             <Grid item xs>
                                 <RouterLink to="/forgotpassword" variant="body2">
                                     Forgot Password
-                            </RouterLink>
+                                </RouterLink>
                             </Grid>
                             <Grid item >
                                 <RouterLink to="/signup" variant="body2">
                                     Don't have an account? Signup
-                            </RouterLink>
+                                </RouterLink>
                             </Grid>
                         </Grid>
                     </form>

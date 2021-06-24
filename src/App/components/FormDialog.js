@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = (theme) => ({
     root: {
         margin: 0,
-        marginLeft: theme.spacing(3),
+        //marginLeft: theme.spacing(3),
         padding: theme.spacing(2),
         color: "green"
     },
@@ -65,7 +65,7 @@ const DialogActions = withStyles((theme) => ({
 
 export default function FormDialog(props) {
     const classes = useStyles();
-    const { Form, Title } = props;
+    const { Form, Title, Heading } = props;
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -84,7 +84,7 @@ export default function FormDialog(props) {
                 paper: classes.dialog
             }}>
                 <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-                    <div>User Form</div>
+                    <div>{Heading}</div>
                 </DialogTitle>
                 <DialogContent dividers>
                     {Form}

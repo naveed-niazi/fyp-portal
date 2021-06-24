@@ -11,16 +11,16 @@ export const addUser = (user, token) => {
         .then(response => { return response.json() })
         .catch(err => { console.log(err) })
 }
-export const getUsers = (user, token) => {
-    return fetch(`http://localhost:8080/getusers`, {
-        method: "GET",
-        headers: {
-            Accept: "application/json",
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            "record": user
-        }
-    })
+export const getUsers = (userType, token) => {
+    return fetch('http://localhost:8080/getusers?' + new URLSearchParams({ record: userType }),
+        {
+            method: "GET",
+            headers: {
+                Accept: "application/json",
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        })
         .then(response => { return response.json() })
         .catch(err => { console.log(err) })
 }

@@ -1,9 +1,25 @@
 export const isLoggedIn = () => {
+
     if (typeof window == "undefined") {
         return false;
     }
     if (localStorage.getItem("jwt")) {
-        return JSON.parse(localStorage.getItem("jwt"))
+
+        if (localStorage.getItem("expire_time")) {
+            const expireTime = parseInt(localStorage.getItem("expire_time"))
+            const timeNow = parseInt(Date.now())
+            if (expireTime < timeNow) {
+                localStorage.removeItem("jwt")
+                localStorage.removeItem("expire_time")
+                localStorage.removeItem("currentRole")
+                return false;
+            }
+            else {
+                return JSON.parse(localStorage.getItem("jwt"))
+            }
+        } else {
+            return JSON.parse(localStorage.getItem("jwt"))
+        }
     }
     else
         return false;

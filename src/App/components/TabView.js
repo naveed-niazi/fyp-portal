@@ -60,19 +60,17 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         backgroundColor: "inherit",
     },
-    '@media(min-width: 786px)': {
-        appbar: {
-            marginLeft: "5rem"
-        },
-    },
-    '@media(max-width: 786px)': {
-        appbar: {
-            marginLeft: "0px",
-            padding: "0px"
-        },
+    appbar: {
+        backgroundColor: theme.palette.primary,
+        marginLeft: "0px",
+        padding: "0px"
     },
 
-
+    firstLabel: {
+        '@media(min-width: 1024px)': {
+            marginLeft: "6rem"
+        }
+    },
 
     '@media(min-width: 1024px)': {
         listView: {
@@ -87,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function TabView({ filterFn, userAdd }) {
+export default function TabView({ filterFn, filterDe, filterBh, filterPd, userAdd, setRecordType }) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -104,23 +102,23 @@ export default function TabView({ filterFn, userAdd }) {
                     onChange={handleChange}
                     variant="scrollable"
                 >
-                    <LinkTab label="Students" href="/students-data" {...a11yProps(0)} />
+                    <LinkTab className={classes.firstLabel} label="Students" href="/students-data" {...a11yProps(0)} />
                     <LinkTab label="Professors" href="/professor-data" {...a11yProps(1)} />
                     <LinkTab label="Admins" href="/program-office-data" {...a11yProps(2)} />
                     <LinkTab label="Program Office" href="/program-office-data" {...a11yProps(3)} />
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0} className={classes.listView}>
-                <Lists recordType={"Student"} filterFn={filterFn} userAdd={userAdd} />
+                <Lists recordType={"Student"} setRecordType={setRecordType} userAdd={userAdd} filterFn={filterFn} filterDe={filterDe} filterBh={filterBh} filterPd={filterPd} />
             </TabPanel>
             <TabPanel value={value} index={1} className={classes.listView}>
-                <Lists recordType={"Professor"} filterFn={filterFn} userAdd={userAdd} />
+                <Lists recordType={"Professor"} setRecordType={setRecordType} filterFn={filterFn} userAdd={userAdd} filterDe={filterDe} filterBh={filterBh} filterPd={filterPd} />
             </TabPanel>
             <TabPanel value={value} index={2} className={classes.listView}>
-                <Lists recordType={"Admin"} filterFn={filterFn} userAdd={userAdd} />
+                <Lists recordType={"Admin"} setRecordType={setRecordType} filterFn={filterFn} userAdd={userAdd} filterDe={filterDe} filterBh={filterBh} filterPd={filterPd} />
             </TabPanel>
             <TabPanel value={value} index={3} className={classes.listView}>
-                <Lists recordType={"Program-Office"} filterFn={filterFn} userAdd={userAdd} />
+                <Lists recordType={"Program-Office"} setRecordType={setRecordType} filterFn={filterFn} userAdd={userAdd} filterDe={filterDe} filterBh={filterBh} filterPd={filterPd} />
             </TabPanel>
         </div>
     );

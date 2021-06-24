@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link as RouterLink } from 'react-router-dom'
 //---
 import Button from '@material-ui/core/Button';
@@ -22,7 +22,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import IIUI from '../../assets/images/iiui-logo.jpg'
 import { validation } from '../helpers/loginHelp'
 import { signup } from '../apiCalls/authCalls'
-import { useEffect } from 'react';
+import { getSignupData } from "../apiCalls/settingCalls"
 
 
 const signupStyles = makeStyles((theme) => ({
@@ -69,6 +69,16 @@ const theme = createMuiTheme({
 
 const SignupForm = () => {
 
+    const [signupData, SetSignupData] = useState({ degrees: [], batches: [] });
+
+    useEffect(() => {
+        getSignupData().then(data => {
+            if (data) {
+                console.log(data)
+                SetSignupData({ degrees: data.degrees, batches: data.batches })
+            }
+        })
+    }, [])
     const classes = signupStyles();
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -77,7 +87,6 @@ const SignupForm = () => {
     const [regNo, setRegNo] = useState('')
     const [signupError, setSignupError] = useState('')
     const [signupSuccess, setSignupSuccess] = useState('')
-
     const [loading, setLoading] = useState(false)
     const [degree, setDegree] = useState('')
     const [batch, setBatch] = useState('')
@@ -130,7 +139,7 @@ const SignupForm = () => {
                 <img className={classes.avatar} src={IIUI} alt="IIUI" />
                 <Typography component="h1" variant="h5">
                     Sign up
-        </Typography>
+                </Typography>
                 {signupSuccess ?
                     <Box className={classes.root} display="flex" justifyContent="center">
                         <Alert severity="success">{signupSuccess}</Alert>
@@ -233,9 +242,9 @@ const SignupForm = () => {
                                             <MenuItem value="">
                                                 <em>None</em>
                                             </MenuItem>
-                                            <MenuItem value='MCS'>MCS</MenuItem>
-                                            <MenuItem value='MIT'>MIT</MenuItem>
-                                            <MenuItem value='MSE'>MSE</MenuItem>
+                                            {signupData.degrees.map((degree, key) => (
+                                                <MenuItem key={key} value={degree}>{degree}</MenuItem>
+                                            ))}
                                         </Select>
                                     </FormControl>
                                 </Grid>
@@ -253,10 +262,9 @@ const SignupForm = () => {
                                             <MenuItem value="">
                                                 <em>None</em>
                                             </MenuItem>
-                                            <MenuItem value='F17'>Fall 17</MenuItem>
-                                            <MenuItem value='F18'>Fall 18</MenuItem>
-                                            <MenuItem value='F19'>Fall 19</MenuItem>
-                                            <MenuItem value='F20'>Fall 20</MenuItem>
+                                            {signupData.batches.map((batch, key)=>(
+                                                <MenuItem  key ={key} value={batch}>{batch}</MenuItem>
+                                            ))}
                                         </Select>
                                     </FormControl>
                                 </Grid>
@@ -275,12 +283,12 @@ const SignupForm = () => {
                                 className={classes.submit}
                             >
                                 Sign Up
-                    </Button>
+                            </Button>
                             <Grid container justify="flex-end">
                                 <Grid item>
                                     <RouterLink to="/signin" variant="body2">
                                         Already have an account? Sign in
-                            </RouterLink>
+                                    </RouterLink>
                                 </Grid>
                             </Grid>
                         </ThemeProvider>

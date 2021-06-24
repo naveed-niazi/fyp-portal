@@ -13,7 +13,7 @@ import Footer from "../components/Footer";
 import Sidebar from "../components/Sidebar";
 import routes from "../variables/mainRoutes"
 import bgImage from "../../assets/images/sidebar-3.jpg";
-import logo from '../../assets/images/iiui-transparent.png';
+import logo from '../../assets/images/bright_iiui.png';
 import { isLoggedIn, roleNow } from '../helpers/authenticationHelp'
 
 import {
@@ -82,10 +82,10 @@ const switchRoutes = (
             }
             return null;
         })}
-        { roleNow() == "Student" ? <Redirect from="/student" to="/student/documentation" /> : ""}
-        { roleNow() == "Admin" ? <Redirect from="/admin" to="/admin/users" /> : ""}
-        { roleNow() == "Program-Office" ? <Redirect from="/program-office" to="/program-office/user-que" /> : ""}
-        { roleNow() == "Professor" ? <Redirect from="/professor" to="/professor/supervisee" /> : ""}
+        {roleNow() == "Student" ? <Redirect from="/student" to="/student/documentation" /> : ""}
+        {roleNow() == "Admin" ? <Redirect from="/admin" to="/admin/users" /> : ""}
+        {roleNow() == "Program-Office" ? <Redirect from="/program-office" to="/program-office/user-que" /> : ""}
+        {roleNow() == "Professor" ? <Redirect from="/professor" to="/professor/supervisee" /> : ""}
     </Switch>
 );
 

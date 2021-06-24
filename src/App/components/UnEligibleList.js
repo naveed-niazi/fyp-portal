@@ -9,8 +9,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import Paper from '@material-ui/core/Paper';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { Table, TableContainer, TableRow, TableCell, Box, TableBody, ThemeProvider } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
+import { Table, TableContainer, TableRow, TableCell, Box, TableBody, ThemeProvider, createMuiTheme } from '@material-ui/core';
+import { green, grey, red } from '@material-ui/core/colors';
 import useTable from "./useTable"
 import ConfirmDialog from "./ConfirmDialog";
 import Popup from "./Popup";
@@ -37,22 +37,20 @@ const headCells = [
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        root: {
-            width: '100%',
-            marginTop: "2rem"
-        },
+        width: '100%',
+        marginTop: "2rem"
     },
     container: {
         maxHeight: 440,
     },
     '@media(min-width: 1024px)': {
         pageContent: {
-            marginRight: theme.spacing(5),
-            marginLeft: theme.spacing(5)
+            //marginRight: theme.spacing(5),
+            //marginLeft: theme.spacing(5)
         },
         searchInput: {
-            margin: theme.spacing(2),
-            width: '80%'
+            margin: "0px",
+            width: '100%'
         },
         newButton: {
             position: 'absolute',
@@ -68,8 +66,7 @@ const useStyles = makeStyles((theme) => ({
             padding: "0px"
         },
         searchInput: {
-            margin: theme.spacing(2),
-            width: '95%',
+            width: '100%',
         },
         newButton: {
             position: 'absolute',
@@ -77,6 +74,12 @@ const useStyles = makeStyles((theme) => ({
         }
     }
 }));
+const theme = createMuiTheme({
+    palette: {
+        primary: green,
+        secondary: red
+    },
+});
 const UnEligibleList = (props) => {
     const classes = useStyles();
     const { userAdd } = props;
@@ -88,9 +91,10 @@ const UnEligibleList = (props) => {
     const [userUpdated, setUserUpdated] = useState(0)
     const [openPopup, setOpenPopup] = useState(false)
     const [users, setUsers] = useState(-1);
-
-    const [error, setError] = useState('');
+    const [error, setError] = useState('')
     const [loading, setLoading] = useState(false);
+    const [updating, setUpdating] = useState("");
+
 
     const {
         TblContainer,
@@ -105,26 +109,30 @@ const UnEligibleList = (props) => {
     }
 
     const makeEligible = id => {
+        setUpdating("yes");
         setConfirmDialog({
-            ...confirmDialog,
-            isOpen: false
+            title: 'User Eligibility Data is being Updated',
+            subTitle: "Please wait!",
+            isOpen: true
         })
         const token = isLoggedIn().token;
         //api call to make-it Eligible
         eligibleUser(id, token)
             .then(data => {
+                setUpdating("done");
                 if (data) {
                     if (data.error || data.err) {
-                        setNotify({
-                            isOpen: true,
-                            message: data.error,
-                            type: 'error'
+                        setConfirmDialog({
+                            title: data.error,
+                            subTitle: "Update Error",
+                            isOpen: true
                         })
-                    } else {
-                        setNotify({
-                            isOpen: true,
-                            message: data.message,
-                            type: 'success'
+                    }
+                    else {
+                        setConfirmDialog({
+                            title: "User Is Now Eligible!",
+                            subTitle: "Data Updated!",
+                            isOpen: true
                         })
                         setUserUpdated(userUpdated + 1)
                     }
@@ -185,7 +193,7 @@ const UnEligibleList = (props) => {
     return (
 
         <div>
-            <Grid container spacing={1} justify="flex-end" className={classes.pageContent}>
+            <Grid container className={classes.pageContent}>
                 <Grid item xs={12} >
                     <Controls.Input
                         label="Search User"
@@ -213,8 +221,9 @@ const UnEligibleList = (props) => {
                                     <TableCell>{item.department}</TableCell>
                                     <TableCell>
                                         <Controls.ActionButton
-                                            color="secondary"
+                                            color="primary"
                                             onClick={() => {
+                                                setUpdating("")
                                                 setConfirmDialog({
                                                     isOpen: true,
                                                     title: 'Are you sure this student is Eligible?',
@@ -238,6 +247,8 @@ const UnEligibleList = (props) => {
                 <ConfirmDialog
                     confirmDialog={confirmDialog}
                     setConfirmDialog={setConfirmDialog}
+                    loading={updating}
+                    setLoading={setLoading}
                 />
             </Paper >
         </div>

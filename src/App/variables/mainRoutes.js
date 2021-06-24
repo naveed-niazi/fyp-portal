@@ -8,6 +8,7 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Language from "@material-ui/icons/Language";
 import AddToQueueIcon from '@material-ui/icons/AddToQueue';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+import SettingsIcon from '@material-ui/icons/Settings';
 // core components/views for Student layout
 
 import Documentation from "../pages/Documentation"
@@ -15,7 +16,7 @@ import Something from "../pages/Something"
 import Users from "../pages/Users"
 import UserQue from "../pages/UserQue";
 import Supervisee from "../pages/Supervisee"
-
+import SystemSetting from "../pages/SystemSetting";
 const dashboardRoutes = [
     {
         path: "/documentation",
@@ -51,6 +52,13 @@ const dashboardRoutes = [
         icon: SupervisorAccountIcon,
         component: Supervisee,
         layout: "/professor"
+    },
+    {
+        path: "/system-setting",
+        name: "System Setting",
+        icon: SettingsIcon,
+        component: SystemSetting,
+        layout: "/admin"
     }
 ];
 

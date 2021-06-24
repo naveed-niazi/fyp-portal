@@ -23,6 +23,7 @@ import styles from "../../assets/jss/headerlinkStyles";
 //---
 import { signout } from '../apiCalls/authCalls'
 import { isLoggedIn, roleNow, changeRole } from '../helpers/authenticationHelp'
+import { clearCache } from "../helpers/logoutHelp";
 
 
 const useStyles = makeStyles(styles);
@@ -47,8 +48,10 @@ const StudentNavbarLinks = () => {
     };
     const handleLogout = () => {
         signout(() => {
+            clearCache()
             history.push("/signin")
         })
+        clearCache()
         history.push("/signin")
     };
     const handleRoleChange = role => {
@@ -87,7 +90,7 @@ const StudentNavbarLinks = () => {
                     <Hidden mdUp implementation="css">
                         <p onClick={handleCloseNotification} className={classes.linkText}>
                             Notification
-            </p>
+                        </p>
                     </Hidden>
                 </Button>
                 <Poppers
@@ -118,31 +121,31 @@ const StudentNavbarLinks = () => {
                                             className={classes.dropdownItem}
                                         >
                                             Admin Messages on the floor
-                    </MenuItem>
+                                        </MenuItem>
                                         <MenuItem
                                             onClick={handleCloseNotification}
                                             className={classes.dropdownItem}
                                         >
                                             You have 5 new tasks
-                    </MenuItem>
+                                        </MenuItem>
                                         <MenuItem
                                             onClick={handleCloseNotification}
                                             className={classes.dropdownItem}
                                         >
                                             You{"'"}re now friend with Andrew
-                    </MenuItem>
+                                        </MenuItem>
                                         <MenuItem
                                             onClick={handleCloseNotification}
                                             className={classes.dropdownItem}
                                         >
                                             Another Notification
-                    </MenuItem>
+                                        </MenuItem>
                                         <MenuItem
                                             onClick={handleCloseNotification}
                                             className={classes.dropdownItem}
                                         >
                                             Another One
-                    </MenuItem>
+                                        </MenuItem>
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>
@@ -212,14 +215,14 @@ const StudentNavbarLinks = () => {
                                             className={classes.dropdownItem}
                                         >
                                             Settings
-                                    </MenuItem>
+                                        </MenuItem>
                                         <Divider light />
                                         <MenuItem
                                             onClick={handleLogout}
                                             className={classes.dropdownItem}
                                         >
                                             Logout
-                                    </MenuItem>
+                                        </MenuItem>
                                     </MenuList>
                                 </ClickAwayListener>
                             </Paper>

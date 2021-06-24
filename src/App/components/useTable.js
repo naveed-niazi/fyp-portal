@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-export default function useTable(records, headCells, filterFn, setRecordType) {
+export default function useTable(records, headCells, filterFn, filterDe, filterBh, filterPd) {
 
     const classes = useStyles();
 
@@ -44,7 +44,7 @@ export default function useTable(records, headCells, filterFn, setRecordType) {
 
     const handleChange = (e) => {
         console.log(e.target.value)
-        setRecordType(e.target.value)
+        //setRecordType(e.target.value)
         setRecord(e.target.value)
     }
     const TblContainer = props => (
@@ -121,7 +121,8 @@ export default function useTable(records, headCells, filterFn, setRecordType) {
     }
 
     const recordsAfterPagingAndSorting = () => {
-        return stableSort(filterFn.fn(records), getComparator(order, orderBy))
+        console.log(records)
+        return stableSort(filterFn.fn(filterDe.de(filterBh.bh(records))), getComparator(order, orderBy))
             .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
     }
 
